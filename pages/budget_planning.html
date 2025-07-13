@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Budget Planning - Expense Tracker</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fexpensetr8810back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.5"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Header Navigation -->
+    <header class="bg-surface shadow-financial sticky top-0 z-50 border-b border-secondary-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-semibold text-text-primary">ExpenseTracker</h1>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="dashboard_overview.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">Dashboard</a>
+                    <a href="add_edit_transaction.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">Add Transaction</a>
+                    <a href="transaction_history.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">History</a>
+                    <a href="budget_planning.html" class="text-primary font-medium px-3 py-2 rounded-md text-sm bg-primary-50">Budget</a>
+                    <a href="savings_goals.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">Goals</a>
+                    <a href="settings_preferences.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">Settings</a>
+                </nav>
+
+                <!-- Dark Mode Toggle & Mobile Menu -->
+                <div class="flex items-center space-x-4">
+                    <button id="darkModeToggle" class="p-2 rounded-lg hover:bg-secondary-100 transition-colors">
+                        <i class="fas fa-moon text-text-secondary"></i>
+                    </button>
+                    <button id="mobileMenuToggle" class="md:hidden p-2 rounded-lg hover:bg-secondary-100 transition-colors">
+                        <i class="fas fa-bars text-text-secondary"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-surface border-t border-secondary-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="dashboard_overview.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">Dashboard</a>
+                <a href="add_edit_transaction.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">Add Transaction</a>
+                <a href="transaction_history.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">History</a>
+                <a href="budget_planning.html" class="block px-3 py-2 rounded-md text-base font-medium text-primary bg-primary-50">Budget</a>
+                <a href="savings_goals.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">Goals</a>
+                <a href="settings_preferences.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">Settings</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb Navigation -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <nav class="flex items-center space-x-2 text-sm text-text-secondary">
+            <a href="dashboard_overview.html" class="hover:text-text-primary transition-colors">Dashboard</a>
+            <i class="fas fa-chevron-right text-xs"></i>
+            <span class="text-text-primary font-medium">Budget Planning</span>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-text-primary">Budget Planning</h1>
+                    <p class="mt-2 text-text-secondary">Set monthly spending limits and track your progress</p>
+                </div>
+                <div class="mt-4 sm:mt-0 flex space-x-3">
+                    <button id="budgetTemplateBtn" class="btn-secondary flex items-center space-x-2 active-scale-98">
+                        <i class="fas fa-template"></i>
+                        <span>Templates</span>
+                    </button>
+                    <button id="newBudgetBtn" class="btn-primary flex items-center space-x-2 active-scale-98">
+                        <i class="fas fa-plus"></i>
+                        <span>New Budget</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Budget Overview Summary -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Total Budget Card -->
+            <div class="card p-6 hover-lift">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-text-secondary text-sm font-medium">Total Monthly Budget</p>
+                        <p class="text-2xl font-bold text-text-primary font-data">₹3,500.00</p>
+                        <p class="text-primary text-sm mt-1">
+                            <i class="fas fa-calendar-alt mr-1"></i>December 2025
+                        </p>
+                    </div>
+                    <div class="bg-primary-50 p-3 rounded-lg">
+                        <i class="fas fa-chart-pie text-primary text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spent Amount Card -->
+            <div class="card p-6 hover-lift">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-text-secondary text-sm font-medium">Total Spent</p>
+                        <p class="text-2xl font-bold text-error font-data">₹2,845.50</p>
+                        <p class="text-text-secondary text-sm mt-1">
+                            <i class="fas fa-percentage mr-1"></i>81.3% of budget
+                        </p>
+                    </div>
+                    <div class="bg-error-50 p-3 rounded-lg">
+                        <i class="fas fa-credit-card text-error text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Remaining Balance Card -->
+            <div class="card p-6 hover-lift">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-text-secondary text-sm font-medium">Remaining Balance</p>
+                        <p class="text-2xl font-bold text-success font-data">₹654.50</p>
+                        <p class="text-text-secondary text-sm mt-1">
+                            <i class="fas fa-clock mr-1"></i>16 days left
+                        </p>
+                    </div>
+                    <div class="bg-success-50 p-3 rounded-lg">
+                        <i class="fas fa-piggy-bank text-success text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Budget Progress Overview -->
+        <div class="card p-6 mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold text-text-primary">Overall Budget Progress</h3>
+                <div class="flex items-center space-x-2 text-sm text-text-secondary">
+                    <span>₹2,845.50 of ₹3,500.00</span>
+                </div>
+            </div>
+            <div class="w-full bg-secondary-200 rounded-full h-3 mb-4">
+                <div class="bg-gradient-to-r from-warning to-error h-3 rounded-full transition-all duration-500" style="width: 81.3%"></div>
+            </div>
+            <div class="flex justify-between text-sm text-text-secondary">
+                <span>Started: Dec 1, 2025</span>
+                <span class="font-medium text-warning">81.3% Used</span>
+                <span>Ends: Dec 31, 2025</span>
+            </div>
+        </div>
+
+        <!-- Budget Categories -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Food & Dining Budget -->
+            <div class="card p-6 hover-lift group">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-blue-50 p-2 rounded-lg">
+                            <i class="fas fa-utensils text-blue-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-text-primary">Food & Dining</h4>
+                            <p class="text-sm text-text-secondary">Daily meals & restaurants</p>
+                        </div>
+                    </div>
+                    <button class="opacity-0 group-hover:opacity-100 text-text-secondary hover:text-primary p-2 rounded-lg hover:bg-primary-50 transition-all">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Budget</span>
+                        <span class="font-data font-semibold text-text-primary">₹600.00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Spent</span>
+                        <span class="font-data font-semibold text-error">₹485.50</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Remaining</span>
+                        <span class="font-data font-semibold text-success">₹114.50</span>
+                    </div>
+                    
+                    <div class="w-full bg-secondary-200 rounded-full h-2">
+                        <div class="bg-warning h-2 rounded-full transition-all duration-500" style="width: 80.9%"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between text-xs text-text-secondary">
+                        <span>80.9% used</span>
+                        <span class="flex items-center text-warning">
+                            <i class="fas fa-exclamation-triangle mr-1"></i>
+                            Approaching limit
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Mini Trend Chart -->
+                <div class="mt-4 pt-4 border-t border-secondary-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-text-secondary">7-day trend</span>
+                        <span class="text-xs text-error">+₹45 this week</span>
+                    </div>
+                    <div class="h-8 flex items-end space-x-1">
+                        <div class="bg-blue-200 w-2 h-3 rounded-sm"></div>
+                        <div class="bg-blue-300 w-2 h-4 rounded-sm"></div>
+                        <div class="bg-blue-400 w-2 h-2 rounded-sm"></div>
+                        <div class="bg-blue-500 w-2 h-6 rounded-sm"></div>
+                        <div class="bg-blue-600 w-2 h-5 rounded-sm"></div>
+                        <div class="bg-blue-700 w-2 h-7 rounded-sm"></div>
+                        <div class="bg-blue-800 w-2 h-8 rounded-sm"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transportation Budget -->
+            <div class="card p-6 hover-lift group">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-green-50 p-2 rounded-lg">
+                            <i class="fas fa-car text-green-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-text-primary">Transportation</h4>
+                            <p class="text-sm text-text-secondary">Gas, public transit & parking</p>
+                        </div>
+                    </div>
+                    <button class="opacity-0 group-hover:opacity-100 text-text-secondary hover:text-primary p-2 rounded-lg hover:bg-primary-50 transition-all">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Budget</span>
+                        <span class="font-data font-semibold text-text-primary">₹300.00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Spent</span>
+                        <span class="font-data font-semibold text-error">₹285.00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Remaining</span>
+                        <span class="font-data font-semibold text-success">₹15.00</span>
+                    </div>
+                    
+                    <div class="w-full bg-secondary-200 rounded-full h-2">
+                        <div class="bg-error h-2 rounded-full transition-all duration-500" style="width: 95%"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between text-xs text-text-secondary">
+                        <span>95% used</span>
+                        <span class="flex items-center text-error">
+                            <i class="fas fa-exclamation-circle mr-1"></i>
+                            Nearly exceeded
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Mini Trend Chart -->
+                <div class="mt-4 pt-4 border-t border-secondary-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-text-secondary">7-day trend</span>
+                        <span class="text-xs text-error">+₹65 this week</span>
+                    </div>
+                    <div class="h-8 flex items-end space-x-1">
+                        <div class="bg-green-200 w-2 h-4 rounded-sm"></div>
+                        <div class="bg-green-300 w-2 h-3 rounded-sm"></div>
+                        <div class="bg-green-400 w-2 h-5 rounded-sm"></div>
+                        <div class="bg-green-500 w-2 h-2 rounded-sm"></div>
+                        <div class="bg-green-600 w-2 h-6 rounded-sm"></div>
+                        <div class="bg-green-700 w-2 h-8 rounded-sm"></div>
+                        <div class="bg-green-800 w-2 h-7 rounded-sm"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shopping Budget -->
+            <div class="card p-6 hover-lift group">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-yellow-50 p-2 rounded-lg">
+                            <i class="fas fa-shopping-bag text-yellow-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-text-primary">Shopping</h4>
+                            <p class="text-sm text-text-secondary">Clothes, electronics & misc</p>
+                        </div>
+                    </div>
+                    <button class="opacity-0 group-hover:opacity-100 text-text-secondary hover:text-primary p-2 rounded-lg hover:bg-primary-50 transition-all">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Budget</span>
+                        <span class="font-data font-semibold text-text-primary">₹400.00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Spent</span>
+                        <span class="font-data font-semibold text-error">₹520.00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Over Budget</span>
+                        <span class="font-data font-semibold text-error">-₹120.00</span>
+                    </div>
+                    
+                    <div class="w-full bg-secondary-200 rounded-full h-2">
+                        <div class="bg-error h-2 rounded-full transition-all duration-500" style="width: 100%"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between text-xs text-text-secondary">
+                        <span>130% used</span>
+                        <span class="flex items-center text-error">
+                            <i class="fas fa-times-circle mr-1"></i>
+                            Budget exceeded
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Mini Trend Chart -->
+                <div class="mt-4 pt-4 border-t border-secondary-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-text-secondary">7-day trend</span>
+                        <span class="text-xs text-error">+₹120 this week</span>
+                    </div>
+                    <div class="h-8 flex items-end space-x-1">
+                        <div class="bg-yellow-200 w-2 h-2 rounded-sm"></div>
+                        <div class="bg-yellow-300 w-2 h-3 rounded-sm"></div>
+                        <div class="bg-yellow-400 w-2 h-4 rounded-sm"></div>
+                        <div class="bg-yellow-500 w-2 h-8 rounded-sm"></div>
+                        <div class="bg-yellow-600 w-2 h-6 rounded-sm"></div>
+                        <div class="bg-yellow-700 w-2 h-5 rounded-sm"></div>
+                        <div class="bg-yellow-800 w-2 h-7 rounded-sm"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Entertainment Budget -->
+            <div class="card p-6 hover-lift group">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-purple-50 p-2 rounded-lg">
+                            <i class="fas fa-film text-purple-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-text-primary">Entertainment</h4>
+                            <p class="text-sm text-text-secondary">Movies, games & subscriptions</p>
+                        </div>
+                    </div>
+                    <button class="opacity-0 group-hover:opacity-100 text-text-secondary hover:text-primary p-2 rounded-lg hover:bg-primary-50 transition-all">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Budget</span>
+                        <span class="font-data font-semibold text-text-primary">₹200.00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Spent</span>
+                        <span class="font-data font-semibold text-error">₹125.00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Remaining</span>
+                        <span class="font-data font-semibold text-success">₹75.00</span>
+                    </div>
+                    
+                    <div class="w-full bg-secondary-200 rounded-full h-2">
+                        <div class="bg-success h-2 rounded-full transition-all duration-500" style="width: 62.5%"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between text-xs text-text-secondary">
+                        <span>62.5% used</span>
+                        <span class="flex items-center text-success">
+                            <i class="fas fa-check-circle mr-1"></i>
+                            On track
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Mini Trend Chart -->
+                <div class="mt-4 pt-4 border-t border-secondary-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-text-secondary">7-day trend</span>
+                        <span class="text-xs text-success">+₹15 this week</span>
+                    </div>
+                    <div class="h-8 flex items-end space-x-1">
+                        <div class="bg-purple-200 w-2 h-4 rounded-sm"></div>
+                        <div class="bg-purple-300 w-2 h-3 rounded-sm"></div>
+                        <div class="bg-purple-400 w-2 h-2 rounded-sm"></div>
+                        <div class="bg-purple-500 w-2 h-5 rounded-sm"></div>
+                        <div class="bg-purple-600 w-2 h-4 rounded-sm"></div>
+                        <div class="bg-purple-700 w-2 h-3 rounded-sm"></div>
+                        <div class="bg-purple-800 w-2 h-4 rounded-sm"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Utilities Budget -->
+            <div class="card p-6 hover-lift group">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-indigo-50 p-2 rounded-lg">
+                            <i class="fas fa-bolt text-indigo-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-text-primary">Utilities</h4>
+                            <p class="text-sm text-text-secondary">Electricity, water & internet</p>
+                        </div>
+                    </div>
+                    <button class="opacity-0 group-hover:opacity-100 text-text-secondary hover:text-primary p-2 rounded-lg hover:bg-primary-50 transition-all">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Budget</span>
+                        <span class="font-data font-semibold text-text-primary">₹250.00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Spent</span>
+                        <span class="font-data font-semibold text-error">₹230.00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Remaining</span>
+                        <span class="font-data font-semibold text-success">₹20.00</span>
+                    </div>
+                    
+                    <div class="w-full bg-secondary-200 rounded-full h-2">
+                        <div class="bg-warning h-2 rounded-full transition-all duration-500" style="width: 92%"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between text-xs text-text-secondary">
+                        <span>92% used</span>
+                        <span class="flex items-center text-warning">
+                            <i class="fas fa-exclamation-triangle mr-1"></i>
+                            Almost full
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Mini Trend Chart -->
+                <div class="mt-4 pt-4 border-t border-secondary-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-text-secondary">7-day trend</span>
+                        <span class="text-xs text-success">+₹25 this week</span>
+                    </div>
+                    <div class="h-8 flex items-end space-x-1">
+                        <div class="bg-indigo-200 w-2 h-5 rounded-sm"></div>
+                        <div class="bg-indigo-300 w-2 h-4 rounded-sm"></div>
+                        <div class="bg-indigo-400 w-2 h-6 rounded-sm"></div>
+                        <div class="bg-indigo-500 w-2 h-3 rounded-sm"></div>
+                        <div class="bg-indigo-600 w-2 h-4 rounded-sm"></div>
+                        <div class="bg-indigo-700 w-2 h-5 rounded-sm"></div>
+                        <div class="bg-indigo-800 w-2 h-6 rounded-sm"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Healthcare Budget -->
+            <div class="card p-6 hover-lift group">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-red-50 p-2 rounded-lg">
+                            <i class="fas fa-heartbeat text-red-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-text-primary">Healthcare</h4>
+                            <p class="text-sm text-text-secondary">Medical & pharmacy expenses</p>
+                        </div>
+                    </div>
+                    <button class="opacity-0 group-hover:opacity-100 text-text-secondary hover:text-primary p-2 rounded-lg hover:bg-primary-50 transition-all">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Budget</span>
+                        <span class="font-data font-semibold text-text-primary">₹150.00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Spent</span>
+                        <span class="font-data font-semibold text-error">₹45.00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-text-secondary">Remaining</span>
+                        <span class="font-data font-semibold text-success">₹105.00</span>
+                    </div>
+                    
+                    <div class="w-full bg-secondary-200 rounded-full h-2">
+                        <div class="bg-success h-2 rounded-full transition-all duration-500" style="width: 30%"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between text-xs text-text-secondary">
+                        <span>30% used</span>
+                        <span class="flex items-center text-success">
+                            <i class="fas fa-check-circle mr-1"></i>
+                            Well under budget
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Mini Trend Chart -->
+                <div class="mt-4 pt-4 border-t border-secondary-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-text-secondary">7-day trend</span>
+                        <span class="text-xs text-success">+₹0 this week</span>
+                    </div>
+                    <div class="h-8 flex items-end space-x-1">
+                        <div class="bg-red-200 w-2 h-2 rounded-sm"></div>
+                        <div class="bg-red-300 w-2 h-1 rounded-sm"></div>
+                        <div class="bg-red-400 w-2 h-3 rounded-sm"></div>
+                        <div class="bg-red-500 w-2 h-1 rounded-sm"></div>
+                        <div class="bg-red-600 w-2 h-2 rounded-sm"></div>
+                        <div class="bg-red-700 w-2 h-1 rounded-sm"></div>
+                        <div class="bg-red-800 w-2 h-2 rounded-sm"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Budget Insights & Recommendations -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Insights Card -->
+            <div class="card p-6">
+                <h3 class="text-lg font-semibold text-text-primary mb-4 flex items-center">
+                    <i class="fas fa-lightbulb text-warning mr-2"></i>
+                    Budget Insights
+                </h3>
+                <div class="space-y-4">
+                    <div class="p-4 bg-error-50 rounded-lg border-l-4 border-error">
+                        <div class="flex items-start">
+                            <i class="fas fa-exclamation-triangle text-error mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-medium text-error">Shopping Budget Exceeded</h4>
+                                <p class="text-sm text-error-600 mt-1">You've spent ₹120 over your shopping budget. Consider reducing discretionary purchases.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 bg-warning-50 rounded-lg border-l-4 border-warning">
+                        <div class="flex items-start">
+                            <i class="fas fa-info-circle text-warning mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-medium text-warning">Transportation Nearly Full</h4>
+                                <p class="text-sm text-warning-600 mt-1">95% of transportation budget used. Monitor gas and transit expenses closely.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 bg-success-50 rounded-lg border-l-4 border-success">
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle text-success mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="font-medium text-success">Healthcare On Track</h4>
+                                <p class="text-sm text-success-600 mt-1">Great job staying under budget! You have ₹105 remaining for medical expenses.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Year-over-Year Comparison -->
+            <div class="card p-6">
+                <h3 class="text-lg font-semibold text-text-primary mb-4 flex items-center">
+                    <i class="fas fa-chart-line text-primary mr-2"></i>
+                    Year-over-Year Comparison
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-3 bg-secondary-50 rounded-lg">
+                        <div>
+                            <p class="font-medium text-text-primary">December 2024</p>
+                            <p class="text-sm text-text-secondary">Total spent: ₹2,650.00</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-data font-semibold text-text-primary">₹3,200.00</p>
+                            <p class="text-sm text-text-secondary">Budget</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 bg-primary-50 rounded-lg">
+                        <div>
+                            <p class="font-medium text-text-primary">December 2025</p>
+                            <p class="text-sm text-text-secondary">Total spent: ₹2,845.50</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-data font-semibold text-text-primary">₹3,500.00</p>
+                            <p class="text-sm text-text-secondary">Budget</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-3 border-t border-secondary-200">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-text-secondary">Year-over-Year Change</span>
+                            <div class="text-right">
+                                <span class="font-data font-semibold text-error">₹195.50</span>
+                                <p class="text-xs text-error">+7.4% increase</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card p-6">
+            <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Actions</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <button class="btn-primary flex items-center justify-center space-x-2 active-scale-98">
+                    <i class="fas fa-plus"></i>
+                    <span>Add Category</span>
+                </button>
+                <button class="btn-secondary flex items-center justify-center space-x-2 active-scale-98">
+                    <i class="fas fa-download"></i>
+                    <span>Export Budget</span>
+                </button>
+                <button class="btn-accent flex items-center justify-center space-x-2 active-scale-98">
+                    <i class="fas fa-copy"></i>
+                    <span>Copy to Next Month</span>
+                </button>
+                <button class="btn-secondary flex items-center justify-center space-x-2 active-scale-98">
+                    <i class="fas fa-undo"></i>
+                    <span>Reset Budget</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Budget Template Modal -->
+    <div id="templateModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-surface rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-secondary-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-semibold text-text-primary">Budget Templates</h3>
+                    <button id="closeTemplateModal" class="text-text-secondary hover:text-text-primary p-2 rounded-lg hover:bg-secondary-100 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="p-6 space-y-4">
+                <!-- Student Template -->
+                <div class="p-4 border border-secondary-200 rounded-lg hover:border-primary-300 cursor-pointer transition-colors group">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="font-semibold text-text-primary group-hover:text-primary">Student Budget</h4>
+                            <p class="text-sm text-text-secondary">Perfect for college students and young professionals</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-data font-semibold text-text-primary">₹1,200/month</p>
+                            <p class="text-xs text-text-secondary">6 categories</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Family Template -->
+                <div class="p-4 border border-secondary-200 rounded-lg hover:border-primary-300 cursor-pointer transition-colors group">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="font-semibold text-text-primary group-hover:text-primary">Family Budget</h4>
+                            <p class="text-sm text-text-secondary">Comprehensive budget for families with children</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-data font-semibold text-text-primary">₹4,500/month</p>
+                            <p class="text-xs text-text-secondary">12 categories</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Freelancer Template -->
+                <div class="p-4 border border-secondary-200 rounded-lg hover:border-primary-300 cursor-pointer transition-colors group">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="font-semibold text-text-primary group-hover:text-primary">Freelancer Budget</h4>
+                            <p class="text-sm text-text-secondary">Designed for variable income and business expenses</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-data font-semibold text-text-primary">₹2,800/month</p>
+                            <p class="text-xs text-text-secondary">8 categories</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Dark mode toggle (placeholder)
+        document.getElementById('darkModeToggle').addEventListener('click', function() {
+            console.log('Dark mode toggled');
+        });
+
+        // Template modal functionality
+        document.getElementById('budgetTemplateBtn').addEventListener('click', function() {
+            document.getElementById('templateModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeTemplateModal').addEventListener('click', function() {
+            document.getElementById('templateModal').classList.add('hidden');
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('templateModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.add('hidden');
+            }
+        });
+
+        // New budget button
+        document.getElementById('newBudgetBtn').addEventListener('click', function() {
+            console.log('Create new budget');
+        });
+
+        // Add swipe-to-edit functionality for mobile
+        if ('ontouchstart' in window) {
+            const budgetCards = document.querySelectorAll('.group');
+            budgetCards.forEach(card => {
+                let startX = 0;
+                let currentX = 0;
+                let isDragging = false;
+
+                card.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    isDragging = true;
+                });
+
+                card.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+                    currentX = e.touches[0].clientX;
+                    const diffX = currentX - startX;
+                    
+                    if (diffX > 50) {
+                        card.style.transform = 'translateX(50px)';
+                        card.style.backgroundColor = '#F0F9FF';
+                    } else {
+                        card.style.transform = 'translateX(0)';
+                        card.style.backgroundColor = '';
+                    }
+                });
+
+                card.addEventListener('touchend', () => {
+                    isDragging = false;
+                    card.style.transform = 'translateX(0)';
+                    card.style.backgroundColor = '';
+                });
+            });
+        }
+
+        // Simulate real-time budget updates
+        setInterval(() => {
+            const progressBars = document.querySelectorAll('.bg-success, .bg-warning, .bg-error');
+            progressBars.forEach(bar => {
+                bar.style.transform = 'scaleX(1.001)';
+                setTimeout(() => {
+                    bar.style.transform = 'scaleX(1)';
+                }, 100);
+            });
+        }, 10000);
+
+        // Add click handlers for budget category edit buttons
+        document.querySelectorAll('.group button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const categoryName = this.closest('.group').querySelector('h4').textContent;
+                console.log(`Edit budget for ${categoryName}`);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings & Preferences - Expense Tracker</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fexpensetr8810back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.5"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Header Navigation -->
+    <header class="bg-surface shadow-financial sticky top-0 z-50 border-b border-secondary-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-semibold text-text-primary">ExpenseTracker</h1>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="dashboard_overview.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">Dashboard</a>
+                    <a href="add_edit_transaction.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">Add Transaction</a>
+                    <a href="transaction_history.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">History</a>
+                    <a href="budget_planning.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">Budget</a>
+                    <a href="savings_goals.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">Goals</a>
+                    <a href="settings_preferences.html" class="text-primary font-medium px-3 py-2 rounded-md text-sm bg-primary-50">Settings</a>
+                </nav>
+
+                <!-- Dark Mode Toggle & Mobile Menu -->
+                <div class="flex items-center space-x-4">
+                    <button id="darkModeToggle" class="p-2 rounded-lg hover:bg-secondary-100 transition-colors">
+                        <i class="fas fa-moon text-text-secondary"></i>
+                    </button>
+                    <button id="mobileMenuToggle" class="md:hidden p-2 rounded-lg hover:bg-secondary-100 transition-colors">
+                        <i class="fas fa-bars text-text-secondary"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-surface border-t border-secondary-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="dashboard_overview.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">Dashboard</a>
+                <a href="add_edit_transaction.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">Add Transaction</a>
+                <a href="transaction_history.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">History</a>
+                <a href="budget_planning.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">Budget</a>
+                <a href="savings_goals.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">Goals</a>
+                <a href="settings_preferences.html" class="block px-3 py-2 rounded-md text-base font-medium text-primary bg-primary-50">Settings</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Breadcrumb -->
+        <nav class="flex mb-6" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2 text-sm">
+                <li>
+                    <a href="dashboard_overview.html" class="text-text-secondary hover:text-text-primary transition-colors">Dashboard</a>
+                </li>
+                <li>
+                    <i class="fas fa-chevron-right text-secondary-400 text-xs"></i>
+                </li>
+                <li>
+                    <span class="text-text-primary font-medium">Settings</span>
+                </li>
+            </ol>
+        </nav>
+
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-semibold text-text-primary mb-2">Settings & Preferences</h1>
+            <p class="text-text-secondary">Customize your expense tracking experience and manage your account preferences</p>
+        </div>
+
+        <!-- Desktop Tabs -->
+        <div class="hidden lg:block mb-8">
+            <div class="border-b border-secondary-200">
+                <nav class="-mb-px flex space-x-8">
+                    <button class="tab-button active py-2 px-1 border-b-2 font-medium text-sm" data-tab="account">
+                        <i class="fas fa-user mr-2"></i>Account
+                    </button>
+                    <button class="tab-button py-2 px-1 border-b-2 font-medium text-sm" data-tab="display">
+                        <i class="fas fa-palette mr-2"></i>Display
+                    </button>
+                    <button class="tab-button py-2 px-1 border-b-2 font-medium text-sm" data-tab="notifications">
+                        <i class="fas fa-bell mr-2"></i>Notifications
+                    </button>
+                    <button class="tab-button py-2 px-1 border-b-2 font-medium text-sm" data-tab="data">
+                        <i class="fas fa-database mr-2"></i>Data
+                    </button>
+                    <button class="tab-button py-2 px-1 border-b-2 font-medium text-sm" data-tab="advanced">
+                        <i class="fas fa-cog mr-2"></i>Advanced
+                    </button>
+                    <button class="tab-button py-2 px-1 border-b-2 font-medium text-sm" data-tab="privacy">
+                        <i class="fas fa-shield-alt mr-2"></i>Privacy
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Settings Content -->
+        <div class="space-y-6">
+            <!-- Account Settings -->
+            <div id="account-section" class="tab-content">
+                <div class="card p-6">
+                    <div class="flex items-center justify-between mb-6 lg:hidden">
+                        <h2 class="text-xl font-semibold text-text-primary flex items-center">
+                            <i class="fas fa-user mr-3 text-primary"></i>Account Settings
+                        </h2>
+                        <button class="mobile-collapse-btn text-secondary-400">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="hidden lg:block mb-6">
+                        <h2 class="text-xl font-semibold text-text-primary">Account Settings</h2>
+                        <p class="text-text-secondary text-sm mt-1">Manage your profile information and account security</p>
+                    </div>
+                    
+                    <div class="mobile-collapse-content space-y-6">
+                        <!-- Profile Information -->
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Profile Information</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-2">Full Name</label>
+                                    <input type="text" class="input-base" value="John Smith" placeholder="Enter your full name" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-2">Email Address</label>
+                                    <input type="email" class="input-base" value="john.smith@email.com" placeholder="Enter your email" />
+                                </div>
+                            </div>
+                            <div class="flex justify-end">
+                                <button class="btn-primary">Update Profile</button>
+                            </div>
+                        </div>
+
+                        <!-- Password Management -->
+                        <div class="border-t border-secondary-200 pt-6">
+                            <h3 class="text-lg font-medium text-text-primary mb-4">Password Management</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-2">Current Password</label>
+                                    <input type="password" class="input-base" placeholder="Enter current password" />
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-text-secondary mb-2">New Password</label>
+                                        <input type="password" class="input-base" placeholder="Enter new password" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-text-secondary mb-2">Confirm Password</label>
+                                        <input type="password" class="input-base" placeholder="Confirm new password" />
+                                    </div>
+                                </div>
+                                <div class="flex justify-end">
+                                    <button class="btn-secondary">Change Password</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Display Preferences -->
+            <div id="display-section" class="tab-content">
+                <div class="card p-6">
+                    <div class="flex items-center justify-between mb-6 lg:hidden">
+                        <h2 class="text-xl font-semibold text-text-primary flex items-center">
+                            <i class="fas fa-palette mr-3 text-primary"></i>Display Preferences
+                        </h2>
+                        <button class="mobile-collapse-btn text-secondary-400">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="hidden lg:block mb-6">
+                        <h2 class="text-xl font-semibold text-text-primary">Display Preferences</h2>
+                        <p class="text-text-secondary text-sm mt-1">Customize the appearance and format of your expense tracker</p>
+                    </div>
+
+                    <div class="mobile-collapse-content space-y-6">
+                        <!-- Theme Settings -->
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Theme Settings</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-4 bg-secondary-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-text-primary">Dark Mode</p>
+                                        <p class="text-sm text-text-secondary">Switch to dark theme for better viewing in low light</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" id="darkModeSwitch" />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                                <div class="flex items-center justify-between p-4 bg-secondary-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-text-primary">System Theme</p>
+                                        <p class="text-sm text-text-secondary">Automatically match your device's theme preference</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Currency & Format -->
+                        <div class="border-t border-secondary-200 pt-6 space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Currency & Format</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-2">Primary Currency</label>
+                                    <select class="input-base">
+                                        <option value="INR" selected>INR - Indian Rupee (₹)</option>
+                                        <option value="USD">USD - US Dollar ($)</option>
+                                        <option value="EUR">EUR - Euro (€)</option>
+                                        <option value="GBP">GBP - British Pound (£)</option>
+                                        <option value="JPY">JPY - Japanese Yen (¥)</option>
+                                        <option value="CAD">CAD - Canadian Dollar (C$)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-2">Date Format</label>
+                                    <select class="input-base">
+                                        <option value="MM/DD/YYYY">MM/DD/YYYY (12/25/2025)</option>
+                                        <option value="DD/MM/YYYY">DD/MM/YYYY (25/12/2025)</option>
+                                        <option value="YYYY-MM-DD">YYYY-MM-DD (2025-12-25)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accessibility -->
+                        <div class="border-t border-secondary-200 pt-6 space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Accessibility</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-2">Font Size</label>
+                                    <select class="input-base">
+                                        <option value="small">Small</option>
+                                        <option value="medium" selected>Medium</option>
+                                        <option value="large">Large</option>
+                                        <option value="extra-large">Extra Large</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center justify-between p-4 bg-secondary-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-text-primary">High Contrast Mode</p>
+                                        <p class="text-sm text-text-secondary">Enhance visibility with high contrast colors</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div id="notifications-section" class="tab-content">
+                <div class="card p-6">
+                    <div class="flex items-center justify-between mb-6 lg:hidden">
+                        <h2 class="text-xl font-semibold text-text-primary flex items-center">
+                            <i class="fas fa-bell mr-3 text-primary"></i>Notification Settings
+                        </h2>
+                        <button class="mobile-collapse-btn text-secondary-400">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="hidden lg:block mb-6">
+                        <h2 class="text-xl font-semibold text-text-primary">Notification Settings</h2>
+                        <p class="text-text-secondary text-sm mt-1">Control when and how you receive notifications</p>
+                    </div>
+
+                    <div class="mobile-collapse-content space-y-6">
+                        <!-- Budget Alerts -->
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Budget Alerts</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-4 bg-secondary-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-text-primary">Budget Limit Warnings</p>
+                                        <p class="text-sm text-text-secondary">Get notified when approaching budget limits</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                                <div class="ml-4">
+                                    <label class="block text-sm font-medium text-text-secondary mb-2">Warning Threshold</label>
+                                    <select class="input-base w-full md:w-48">
+                                        <option value="75">75% of budget</option>
+                                        <option value="80" selected>80% of budget</option>
+                                        <option value="90">90% of budget</option>
+                                        <option value="95">95% of budget</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Goal Reminders -->
+                        <div class="border-t border-secondary-200 pt-6 space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Savings Goal Reminders</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-4 bg-secondary-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-text-primary">Goal Progress Updates</p>
+                                        <p class="text-sm text-text-secondary">Weekly updates on your savings progress</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                                <div class="flex items-center justify-between p-4 bg-secondary-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-text-primary">Goal Deadline Reminders</p>
+                                        <p class="text-sm text-text-secondary">Reminders when approaching goal deadlines</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recurring Transactions -->
+                        <div class="border-t border-secondary-200 pt-6 space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Recurring Transactions</h3>
+                            <div class="flex items-center justify-between p-4 bg-secondary-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-text-primary">Recurring Transaction Reminders</p>
+                                    <p class="text-sm text-text-secondary">Get notified about upcoming recurring expenses</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked />
+                                    <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Management -->
+            <div id="data-section" class="tab-content">
+                <div class="card p-6">
+                    <div class="flex items-center justify-between mb-6 lg:hidden">
+                        <h2 class="text-xl font-semibold text-text-primary flex items-center">
+                            <i class="fas fa-database mr-3 text-primary"></i>Data Management
+                        </h2>
+                        <button class="mobile-collapse-btn text-secondary-400">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="hidden lg:block mb-6">
+                        <h2 class="text-xl font-semibold text-text-primary">Data Management</h2>
+                        <p class="text-text-secondary text-sm mt-1">Export, backup, and manage your financial data</p>
+                    </div>
+
+                    <div class="mobile-collapse-content space-y-6">
+                        <!-- Export Data -->
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Export Data</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="p-4 border border-secondary-200 rounded-lg">
+                                    <div class="flex items-center mb-3">
+                                        <i class="fas fa-file-csv text-green-500 text-xl mr-3"></i>
+                                        <div>
+                                            <p class="font-medium text-text-primary">Export to CSV</p>
+                                            <p class="text-sm text-text-secondary">Download your data in CSV format</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn-secondary w-full">Export CSV</button>
+                                </div>
+                                <div class="p-4 border border-secondary-200 rounded-lg">
+                                    <div class="flex items-center mb-3">
+                                        <i class="fas fa-file-alt text-blue-500 text-xl mr-3"></i>
+                                        <div>
+                                            <p class="font-medium text-text-primary">Export to Text</p>
+                                            <p class="text-sm text-text-secondary">Download as plain text file</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn-secondary w-full">Export Text</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Backup Options -->
+                        <div class="border-t border-secondary-200 pt-6 space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Backup Options</h3>
+                            <div class="p-4 border border-secondary-200 rounded-lg">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-cloud text-primary text-xl mr-3"></i>
+                                        <div>
+                                            <p class="font-medium text-text-primary">Google Sheets Integration</p>
+                                            <p class="text-sm text-text-secondary">Automatically backup to Google Sheets</p>
+                                        </div>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                                <button class="btn-primary">Connect Google Sheets</button>
+                            </div>
+                        </div>
+
+                        <!-- Import Data -->
+                        <div class="border-t border-secondary-200 pt-6 space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Import Data</h3>
+                            <div class="p-4 border-2 border-dashed border-secondary-300 rounded-lg text-center">
+                                <i class="fas fa-upload text-secondary-400 text-3xl mb-3"></i>
+                                <p class="text-text-primary font-medium mb-2">Import from other applications</p>
+                                <p class="text-sm text-text-secondary mb-4">Drag and drop your CSV file or click to browse</p>
+                                <input type="file" id="importFile" class="hidden" accept=".csv,.txt" />
+                                <button class="btn-secondary" onclick="document.getElementById('importFile').click()">Choose File</button>
+                            </div>
+                        </div>
+
+                        <!-- Clear Data -->
+                        <div class="border-t border-secondary-200 pt-6 space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Clear Data</h3>
+                            <div class="p-4 bg-error-50 border border-error-200 rounded-lg">
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-error text-xl mr-3 mt-1"></i>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-error mb-2">Danger Zone</p>
+                                        <p class="text-sm text-error-600 mb-4">This action cannot be undone. All your transaction data, budgets, and goals will be permanently deleted.</p>
+                                        <button class="btn-secondary text-error border-error hover:bg-error-50" onclick="confirmClearData()">Clear All Data</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Settings -->
+            <div id="advanced-section" class="tab-content">
+                <div class="card p-6">
+                    <div class="flex items-center justify-between mb-6 lg:hidden">
+                        <h2 class="text-xl font-semibold text-text-primary flex items-center">
+                            <i class="fas fa-cog mr-3 text-primary"></i>Advanced Settings
+                        </h2>
+                        <button class="mobile-collapse-btn text-secondary-400">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="hidden lg:block mb-6">
+                        <h2 class="text-xl font-semibold text-text-primary">Advanced Settings</h2>
+                        <p class="text-text-secondary text-sm mt-1">Configure advanced features and automation</p>
+                    </div>
+
+                    <div class="mobile-collapse-content space-y-6">
+                        <!-- Voice Input Settings -->
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Voice Input Settings</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-4 bg-secondary-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-text-primary">Enable Voice Input</p>
+                                        <p class="text-sm text-text-secondary">Use voice commands to add transactions</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                                <div class="ml-4">
+                                    <label class="block text-sm font-medium text-text-secondary mb-2">Voice Sensitivity</label>
+                                    <input type="range" class="w-full h-2 bg-secondary-200 rounded-lg appearance-none cursor-pointer" min="1" max="10" value="7" />
+                                    <div class="flex justify-between text-xs text-text-secondary mt-1">
+                                        <span>Low</span>
+                                        <span>High</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Auto-Categorization -->
+                        <div class="border-t border-secondary-200 pt-6 space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Auto-Categorization</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-4 bg-secondary-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-text-primary">Smart Categorization</p>
+                                        <p class="text-sm text-text-secondary">Automatically categorize transactions based on merchant names</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Default Categories -->
+                        <div class="border-t border-secondary-200 pt-6 space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Default Categories</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-2">Default Income Category</label>
+                                    <select class="input-base">
+                                        <option value="salary">Salary</option>
+                                        <option value="freelance">Freelance</option>
+                                        <option value="investment">Investment</option>
+                                        <option value="other">Other Income</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-2">Default Expense Category</label>
+                                    <select class="input-base">
+                                        <option value="food">Food & Dining</option>
+                                        <option value="transport">Transportation</option>
+                                        <option value="shopping">Shopping</option>
+                                        <option value="other">Other Expenses</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Custom Categories -->
+                        <div class="border-t border-secondary-200 pt-6 space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Custom Categories</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-3 bg-secondary-50 rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="w-4 h-4 bg-purple-500 rounded-full mr-3"></div>
+                                        <span class="text-text-primary">Gym & Fitness</span>
+                                    </div>
+                                    <button class="text-error hover:bg-error-50 p-1 rounded">
+                                        <i class="fas fa-trash text-sm"></i>
+                                    </button>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-secondary-50 rounded-lg">
+                                    <div class="flex items-center">
+                                        <div class="w-4 h-4 bg-orange-500 rounded-full mr-3"></div>
+                                        <span class="text-text-primary">Pet Care</span>
+                                    </div>
+                                    <button class="text-error hover:bg-error-50 p-1 rounded">
+                                        <i class="fas fa-trash text-sm"></i>
+                                    </button>
+                                </div>
+                                <button class="btn-secondary w-full" onclick="addCustomCategory()">
+                                    <i class="fas fa-plus mr-2"></i>Add Custom Category
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy Settings -->
+            <div id="privacy-section" class="tab-content">
+                <div class="card p-6">
+                    <div class="flex items-center justify-between mb-6 lg:hidden">
+                        <h2 class="text-xl font-semibold text-text-primary flex items-center">
+                            <i class="fas fa-shield-alt mr-3 text-primary"></i>Privacy & Security
+                        </h2>
+                        <button class="mobile-collapse-btn text-secondary-400">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="hidden lg:block mb-6">
+                        <h2 class="text-xl font-semibold text-text-primary">Privacy & Security</h2>
+                        <p class="text-text-secondary text-sm mt-1">Control your data privacy and security settings</p>
+                    </div>
+
+                    <div class="mobile-collapse-content space-y-6">
+                        <!-- Data Storage -->
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Data Storage</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-4 bg-secondary-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-text-primary">Local Storage Only</p>
+                                        <p class="text-sm text-text-secondary">Keep all data stored locally on your device</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Receipt Images -->
+                        <div class="border-t border-secondary-200 pt-6 space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Receipt Images</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-4 bg-secondary-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-text-primary">Store Receipt Images</p>
+                                        <p class="text-sm text-text-secondary">Save uploaded receipt images locally</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                                <div class="ml-4">
+                                    <label class="block text-sm font-medium text-text-secondary mb-2">Auto-delete after</label>
+                                    <select class="input-base w-full md:w-48">
+                                        <option value="30">30 days</option>
+                                        <option value="90" selected>90 days</option>
+                                        <option value="180">6 months</option>
+                                        <option value="365">1 year</option>
+                                        <option value="never">Never</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data Retention -->
+                        <div class="border-t border-secondary-200 pt-6 space-y-4">
+                            <h3 class="text-lg font-medium text-text-primary">Data Retention</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-2">Keep transaction data for</label>
+                                    <select class="input-base w-full md:w-64">
+                                        <option value="1">1 year</option>
+                                        <option value="2" selected>2 years</option>
+                                        <option value="5">5 years</option>
+                                        <option value="forever">Forever</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center justify-between p-4 bg-secondary-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-text-primary">Auto-cleanup old data</p>
+                                        <p class="text-sm text-text-secondary">Automatically remove data older than retention period</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" />
+                                        <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Privacy Information -->
+                        <div class="border-t border-secondary-200 pt-6">
+                            <div class="p-4 bg-primary-50 border border-primary-200 rounded-lg">
+                                <div class="flex items-start">
+                                    <i class="fas fa-info-circle text-primary text-xl mr-3 mt-1"></i>
+                                    <div>
+                                        <p class="font-medium text-primary mb-2">Privacy Notice</p>
+                                        <p class="text-sm text-primary-700">This application operates entirely in your browser. No data is transmitted to external servers unless you explicitly enable cloud backup features. Your financial information remains private and secure on your device.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save Settings Button -->
+        <div class="mt-8 flex justify-center">
+            <div class="flex space-x-4">
+                <button class="btn-secondary" onclick="resetToDefaults()">Reset to Defaults</button>
+                <button class="btn-primary" onclick="saveSettings()">Save All Settings</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Dark mode toggle
+        document.getElementById('darkModeToggle').addEventListener('click', function() {
+            const darkModeSwitch = document.getElementById('darkModeSwitch');
+            darkModeSwitch.checked = !darkModeSwitch.checked;
+            toggleDarkMode(darkModeSwitch.checked);
+        });
+
+        // Tab functionality for desktop
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.getAttribute('data-tab');
+                
+                // Update tab buttons
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active', 'border-primary', 'text-primary');
+                    btn.classList.add('border-transparent', 'text-text-secondary', 'hover:text-text-primary', 'hover:border-secondary-300');
+                });
+                
+                button.classList.add('active', 'border-primary', 'text-primary');
+                button.classList.remove('border-transparent', 'text-text-secondary', 'hover:text-text-primary', 'hover:border-secondary-300');
+                
+                // Show/hide content sections
+                tabContents.forEach(content => {
+                    if (content.id === targetTab + '-section') {
+                        content.classList.remove('hidden');
+                    } else {
+                        content.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Initialize first tab as active on desktop
+        if (window.innerWidth >= 1024) {
+            tabContents.forEach((content, index) => {
+                if (index !== 0) {
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+        // Mobile collapse functionality
+        document.querySelectorAll('.mobile-collapse-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const content = this.parentElement.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+
+        // Initialize mobile collapse state
+        if (window.innerWidth < 1024) {
+            document.querySelectorAll('.mobile-collapse-content').forEach((content, index) => {
+                if (index !== 0) {
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+        // Dark mode functionality
+        function toggleDarkMode(enabled) {
+            if (enabled) {
+                document.body.classList.add('dark');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        // Load saved dark mode preference
+        const savedDarkMode = localStorage.getItem('darkMode');
+        if (savedDarkMode === 'enabled') {
+            document.getElementById('darkModeSwitch').checked = true;
+            toggleDarkMode(true);
+        }
+
+        // Settings functions
+        function saveSettings() {
+            // Collect all form data
+            const settings = {
+                profile: {
+                    name: document.querySelector('input[placeholder="Enter your full name"]').value,
+                    email: document.querySelector('input[placeholder="Enter your email"]').value
+                },
+                display: {
+                    darkMode: document.getElementById('darkModeSwitch').checked,
+                    currency: document.querySelector('select').value,
+                    dateFormat: document.querySelectorAll('select')[1].value,
+                    fontSize: document.querySelectorAll('select')[2].value
+                },
+                notifications: {
+                    budgetAlerts: document.querySelectorAll('input[type="checkbox"]')[2].checked,
+                    goalReminders: document.querySelectorAll('input[type="checkbox"]')[4].checked,
+                    recurringReminders: document.querySelectorAll('input[type="checkbox"]')[6].checked
+                }
+            };
+            
+            localStorage.setItem('expenseTrackerSettings', JSON.stringify(settings));
+            
+            // Show success message
+            showNotification('Settings saved successfully!', 'success');
+        }
+
+        function resetToDefaults() {
+            if (confirm('Are you sure you want to reset all settings to default values? This action cannot be undone.')) {
+                localStorage.removeItem('expenseTrackerSettings');
+                location.reload();
+            }
+        }
+
+        function confirmClearData() {
+            if (confirm('Are you absolutely sure you want to delete all your data? This action cannot be undone and will permanently remove all transactions, budgets, and goals.')) {
+                if (confirm('This is your final warning. All data will be permanently deleted. Continue?')) {
+                    localStorage.clear();
+                    showNotification('All data has been cleared successfully.', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard_overview.html';
+                    }, 2000);
+                }
+            }
+        }
+
+        function addCustomCategory() {
+            const categoryName = prompt('Enter the name for your custom category:');
+            if (categoryName && categoryName.trim()) {
+                const colors = ['purple', 'orange', 'pink', 'indigo', 'teal', 'cyan'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                const categoryList = document.querySelector('#advanced-section .space-y-3');
+                const newCategory = document.createElement('div');
+                newCategory.className = 'flex items-center justify-between p-3 bg-secondary-50 rounded-lg';
+                newCategory.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-${randomColor}-500 rounded-full mr-3"></div>
+                        <span class="text-text-primary">${categoryName.trim()}</span>
+                    </div>
+                    <button class="text-error hover:bg-error-50 p-1 rounded" onclick="this.parentElement.remove()">
+                        <i class="fas fa-trash text-sm"></i>
+                    </button>
+                `;
+                
+                categoryList.insertBefore(newCategory, categoryList.lastElementChild);
+                showNotification(`Category "${categoryName.trim()}" added successfully!`, 'success');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full`;
+            
+            if (type === 'success') {
+                notification.className += ' bg-success text-white';
+            } else if (type === 'error') {
+                notification.className += ' bg-error text-white';
+            } else {
+                notification.className += ' bg-primary text-white';
+            }
+            
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'exclamation-triangle' : 'info'} mr-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Animate out and remove
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Load saved settings on page load
+        window.addEventListener('load', function() {
+            const savedSettings = localStorage.getItem('expenseTrackerSettings');
+            if (savedSettings) {
+                const settings = JSON.parse(savedSettings);
+                
+                // Apply saved settings to form fields
+                if (settings.profile) {
+                    if (settings.profile.name) {
+                        document.querySelector('input[placeholder="Enter your full name"]').value = settings.profile.name;
+                    }
+                    if (settings.profile.email) {
+                        document.querySelector('input[placeholder="Enter your email"]').value = settings.profile.email;
+                    }
+                }
+                
+                if (settings.display) {
+                    if (settings.display.darkMode) {
+                        document.getElementById('darkModeSwitch').checked = settings.display.darkMode;
+                        toggleDarkMode(settings.display.darkMode);
+                    }
+                }
+            }
+        });
+
+        // Handle responsive behavior
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) {
+                // Desktop: show tab content, hide mobile collapse
+                document.querySelectorAll('.mobile-collapse-content').forEach(content => {
+                    content.classList.remove('hidden');
+                });
+                
+                // Show first tab content only
+                tabContents.forEach((content, index) => {
+                    if (index !== 0) {
+                        content.classList.add('hidden');
+                    }
+                });
+            } else {
+                // Mobile: show all sections, enable collapse
+                tabContents.forEach(content => {
+                    content.classList.remove('hidden');
+                });
+                
+                // Collapse all except first
+                document.querySelectorAll('.mobile-collapse-content').forEach((content, index) => {
+                    if (index !== 0) {
+                        content.classList.add('hidden');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

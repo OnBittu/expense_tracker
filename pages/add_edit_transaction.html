@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Transaction - Expense Tracker</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fexpensetr8810back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.5"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Header Navigation -->
+    <header class="bg-surface shadow-financial sticky top-0 z-50 border-b border-secondary-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-semibold text-text-primary">ExpenseTracker</h1>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="dashboard_overview.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">Dashboard</a>
+                    <a href="add_edit_transaction.html" class="text-primary font-medium px-3 py-2 rounded-md text-sm bg-primary-50">Add Transaction</a>
+                    <a href="transaction_history.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">History</a>
+                    <a href="budget_planning.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">Budget</a>
+                    <a href="savings_goals.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">Goals</a>
+                    <a href="settings_preferences.html" class="text-text-secondary hover:text-text-primary px-3 py-2 rounded-md text-sm transition-colors">Settings</a>
+                </nav>
+
+                <!-- Dark Mode Toggle & Mobile Menu -->
+                <div class="flex items-center space-x-4">
+                    <button id="darkModeToggle" class="p-2 rounded-lg hover:bg-secondary-100 transition-colors">
+                        <i class="fas fa-moon text-text-secondary"></i>
+                    </button>
+                    <button id="mobileMenuToggle" class="md:hidden p-2 rounded-lg hover:bg-secondary-100 transition-colors">
+                        <i class="fas fa-bars text-text-secondary"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-surface border-t border-secondary-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="dashboard_overview.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">Dashboard</a>
+                <a href="add_edit_transaction.html" class="block px-3 py-2 rounded-md text-base font-medium text-primary bg-primary-50">Add Transaction</a>
+                <a href="transaction_history.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">History</a>
+                <a href="budget_planning.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">Budget</a>
+                <a href="savings_goals.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">Goals</a>
+                <a href="settings_preferences.html" class="block px-3 py-2 rounded-md text-base font-medium text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors">Settings</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Quick Actions Section -->
+    <div class="md:hidden bg-surface border-b border-secondary-200 sticky top-16 z-40">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="py-3">
+                <div class="flex space-x-3 overflow-x-auto">
+                    <a href="add_edit_transaction.html" class="btn-primary flex items-center justify-center space-x-2 active-scale-98 flex-shrink-0">
+                        <i class="fas fa-plus"></i>
+                        <span>Add Expense</span>
+                    </a>
+                    <a href="transaction_history.html" class="btn-secondary flex items-center justify-center space-x-2 active-scale-98 flex-shrink-0">
+                        <i class="fas fa-list"></i>
+                        <span>View Summary</span>
+                    </a>
+                    <a href="budget_planning.html" class="btn-accent flex items-center justify-center space-x-2 active-scale-98 flex-shrink-0">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Budget</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breadcrumb Navigation -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <nav class="flex" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li>
+                    <a href="dashboard_overview.html" class="text-text-secondary hover:text-text-primary transition-colors">
+                        <i class="fas fa-home mr-1"></i>Dashboard
+                    </a>
+                </li>
+                <li>
+                    <i class="fas fa-chevron-right text-secondary-400 text-sm"></i>
+                </li>
+                <li>
+                    <span class="text-text-primary font-medium">Add Transaction</span>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold text-text-primary mb-2">Add New Transaction</h2>
+            <p class="text-text-secondary">Record your income or expense with detailed information</p>
+        </div>
+
+        <!-- Transaction Form -->
+        <form id="transactionForm" class="space-y-6">
+            <!-- Transaction Type Toggle -->
+            <div class="card p-6">
+                <h3 class="text-lg font-semibold text-text-primary mb-4">Transaction Type</h3>
+                <div class="flex rounded-lg bg-secondary-100 p-1">
+                    <button type="button" id="expenseBtn" class="flex-1 py-3 px-4 text-sm font-medium rounded-md transition-all duration-200 bg-error text-white">
+                        <i class="fas fa-minus-circle mr-2"></i>Expense
+                    </button>
+                    <button type="button" id="incomeBtn" class="flex-1 py-3 px-4 text-sm font-medium rounded-md transition-all duration-200 text-text-secondary hover:text-text-primary">
+                        <i class="fas fa-plus-circle mr-2"></i>Income
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Form Fields -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Left Column -->
+                <div class="space-y-6">
+                    <!-- Amount Input -->
+                    <div class="card p-6">
+                        <label for="amount" class="block text-sm font-medium text-text-primary mb-2">
+                            Amount <span class="text-error">*</span>
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-text-secondary text-lg font-data">₹</span>
+                            </div>
+                            <input type="number" id="amount" name="amount" step="0.01" min="0" required class="input-base pl-8 text-2xl font-data h-14 text-center" placeholder="0.00" />
+                        </div>
+                        <div id="amountError" class="hidden text-error text-sm mt-1">
+                            <i class="fas fa-exclamation-circle mr-1"></i>Please enter a valid amount
+                        </div>
+                    </div>
+
+                    <!-- Category Selection -->
+                    <div class="card p-6">
+                        <label for="category" class="block text-sm font-medium text-text-primary mb-2">
+                            Category <span class="text-error">*</span>
+                        </label>
+                        <div class="relative">
+                            <select id="category" name="category" required class="input-base pr-10 appearance-none">
+                                <option value>Select a category</option>
+                                <optgroup label="Expense Categories" id="expenseCategories">
+                                    <option value="food-dining">🍽️ Food & Dining</option>
+                                    <option value="transportation">🚗 Transportation</option>
+                                    <option value="shopping">🛍️ Shopping</option>
+                                    <option value="entertainment">🎬 Entertainment</option>
+                                    <option value="utilities">⚡ Utilities</option>
+                                    <option value="healthcare">🏥 Healthcare</option>
+                                    <option value="education">📚 Education</option>
+                                    <option value="travel">✈️ Travel</option>
+                                    <option value="other-expense">📦 Other</option>
+                                </optgroup>
+                                <optgroup label="Income Categories" id="incomeCategories" class="hidden">
+                                    <option value="salary">💼 Salary</option>
+                                    <option value="freelance">💻 Freelance</option>
+                                    <option value="investment">📈 Investment</option>
+                                    <option value="gift">🎁 Gift</option>
+                                    <option value="other-income">💰 Other Income</option>
+                                </optgroup>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-secondary-400"></i>
+                            </div>
+                        </div>
+                        <button type="button" id="addCategoryBtn" class="mt-2 text-primary text-sm font-medium hover:text-primary-700 transition-colors">
+                            <i class="fas fa-plus mr-1"></i>Add Custom Category
+                        </button>
+                        <div id="categoryError" class="hidden text-error text-sm mt-1">
+                            <i class="fas fa-exclamation-circle mr-1"></i>Please select a category
+                        </div>
+                    </div>
+
+                    <!-- Date Input -->
+                    <div class="card p-6">
+                        <label for="date" class="block text-sm font-medium text-text-primary mb-2">
+                            Date <span class="text-error">*</span>
+                        </label>
+                        <input type="date" id="date" name="date" required class="input-base" />
+                        <div id="dateError" class="hidden text-error text-sm mt-1">
+                            <i class="fas fa-exclamation-circle mr-1"></i>Please select a date
+                        </div>
+                    </div>
+
+                    <!-- Currency Selection -->
+                    <div class="card p-6">
+                        <label for="currency" class="block text-sm font-medium text-text-primary mb-2">Currency</label>
+                        <div class="relative">
+                            <select id="currency" name="currency" class="input-base pr-10 appearance-none">
+                                <option value="INR" selected>🇮🇳 INR - Indian Rupee</option>
+                                <option value="USD">🇺🇸 USD - US Dollar</option>
+                                <option value="EUR">🇪🇺 EUR - Euro</option>
+                                <option value="GBP">🇬🇧 GBP - British Pound</option>
+                                <option value="JPY">🇯🇵 JPY - Japanese Yen</option>
+                                <option value="CAD">🇨🇦 CAD - Canadian Dollar</option>
+                                <option value="AUD">🇦🇺 AUD - Australian Dollar</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-secondary-400"></i>
+                            </div>
+                        </div>
+                        <div id="conversionRate" class="hidden text-sm text-text-secondary mt-2">
+                            <i class="fas fa-exchange-alt mr-1"></i>
+                            <span id="conversionText"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="space-y-6">
+                    <!-- Description Input -->
+                    <div class="card p-6">
+                        <label for="description" class="block text-sm font-medium text-text-primary mb-2">Description</label>
+                        <div class="relative">
+                            <textarea id="description" name="description" rows="4" class="input-base resize-none pr-12" placeholder="Add a note about this transaction..."></textarea>
+                            <button type="button" id="voiceInputBtn" class="absolute top-3 right-3 p-2 text-text-secondary hover:text-primary transition-colors rounded-lg hover:bg-secondary-100">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="text-xs text-text-secondary">
+                                <i class="fas fa-microphone mr-1"></i>Click microphone for voice input
+                            </span>
+                            <span id="charCount" class="text-xs text-text-secondary">0/200</span>
+                        </div>
+                    </div>
+
+                    <!-- Receipt Upload -->
+                    <div class="card p-6">
+                        <label class="block text-sm font-medium text-text-primary mb-2">Receipt Image</label>
+                        <div class="border-2 border-dashed border-secondary-300 rounded-lg p-6 text-center hover:border-primary-400 transition-colors">
+                            <input type="file" id="receiptUpload" accept="image/*" capture="environment" class="hidden" />
+                            <div id="uploadArea" class="cursor-pointer">
+                                <i class="fas fa-camera text-3xl text-secondary-400 mb-3"></i>
+                                <p class="text-text-secondary mb-2">Take a photo or upload receipt</p>
+                                <button type="button" class="btn-secondary text-sm">
+                                    <i class="fas fa-upload mr-2"></i>Choose File
+                                </button>
+                            </div>
+                            <div id="imagePreview" class="hidden">
+                                <img id="previewImg" class="max-w-full h-32 object-cover rounded-lg mx-auto mb-3" alt="Receipt preview" />
+                                <button type="button" id="removeImage" class="text-error text-sm hover:text-error-600 transition-colors">
+                                    <i class="fas fa-trash mr-1"></i>Remove Image
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recurring Transaction -->
+                    <div class="card p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <label class="text-sm font-medium text-text-primary">Recurring Transaction</label>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="recurringToggle" class="sr-only peer" />
+                                <div class="w-11 h-6 bg-secondary-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                            </label>
+                        </div>
+                        <div id="recurringOptions" class="hidden space-y-3">
+                            <div>
+                                <label for="frequency" class="block text-sm font-medium text-text-secondary mb-1">Frequency</label>
+                                <select id="frequency" name="frequency" class="input-base text-sm">
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly" selected>Monthly</option>
+                                    <option value="yearly">Yearly</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="endDate" class="block text-sm font-medium text-text-secondary mb-1">End Date (Optional)</label>
+                                <input type="date" id="endDate" name="endDate" class="input-base text-sm" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="sticky bottom-0 bg-background border-t border-secondary-200 p-4 -mx-4 sm:mx-0 sm:relative sm:bg-transparent sm:border-0 sm:p-0">
+                <div class="flex flex-col sm:flex-row gap-3 sm:justify-end">
+                    <button type="button" id="cancelBtn" class="btn-secondary w-full sm:w-auto order-2 sm:order-1">
+                        <i class="fas fa-times mr-2"></i>Cancel
+                    </button>
+                    <button type="button" id="saveAnotherBtn" class="btn-accent w-full sm:w-auto order-3 sm:order-2 hidden">
+                        <i class="fas fa-plus mr-2"></i>Save & Add Another
+                    </button>
+                    <button type="submit" id="saveBtn" class="btn-primary w-full sm:w-auto order-1 sm:order-3">
+                        <i class="fas fa-save mr-2"></i>Save Transaction
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div class="bg-surface rounded-lg p-6 max-w-sm w-full text-center animate-fade-in">
+                <div class="bg-success-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check text-success text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-text-primary mb-2">Transaction Saved!</h3>
+                <p class="text-text-secondary mb-4">Your transaction has been successfully recorded.</p>
+                <div class="flex gap-3">
+                    <button id="addAnotherBtn" class="btn-primary flex-1">Add Another</button>
+                    <button id="viewDashboardBtn" class="btn-secondary flex-1">View Dashboard</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Category Modal -->
+        <div id="categoryModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div class="bg-surface rounded-lg p-6 max-w-md w-full animate-fade-in">
+                <h3 class="text-lg font-semibold text-text-primary mb-4">Add Custom Category</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label for="customCategoryName" class="block text-sm font-medium text-text-primary mb-2">Category Name</label>
+                        <input type="text" id="customCategoryName" class="input-base" placeholder="Enter category name" />
+                    </div>
+                    <div>
+                        <label for="customCategoryIcon" class="block text-sm font-medium text-text-primary mb-2">Icon (Emoji)</label>
+                        <input type="text" id="customCategoryIcon" class="input-base" placeholder="📦" maxlength="2" />
+                    </div>
+                </div>
+                <div class="flex gap-3 mt-6">
+                    <button id="cancelCategoryBtn" class="btn-secondary flex-1">Cancel</button>
+                    <button id="saveCategoryBtn" class="btn-primary flex-1">Save Category</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Global variables
+        let isEditMode = false;
+        let currentTransactionType = 'expense';
+        let recognition = null;
+        let isListening = false;
+
+        // Exchange rates (mock data - in real app, fetch from API)
+        const exchangeRates = {
+            INR: 1,
+            USD: 0.012,
+            EUR: 0.010,
+            GBP: 0.0088,
+            JPY: 1.32,
+            CAD: 0.015,
+            AUD: 0.016
+        };
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            setupEventListeners();
+            setupVoiceRecognition();
+        });
+
+        function initializePage() {
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').value = today;
+
+            // Check if editing existing transaction
+            const urlParams = new URLSearchParams(window.location.search);
+            const transactionId = urlParams.get('id');
+            
+            if (transactionId) {
+                isEditMode = true;
+                loadTransactionForEdit(transactionId);
+                document.querySelector('h2').textContent = 'Edit Transaction';
+                document.getElementById('saveBtn').innerHTML = '<i class="fas fa-save mr-2"></i>Update Transaction';
+            }
+        }
+
+        function setupEventListeners() {
+            // Mobile menu toggle
+            document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+                const mobileMenu = document.getElementById('mobileMenu');
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Transaction type toggle
+            document.getElementById('expenseBtn').addEventListener('click', () => setTransactionType('expense'));
+            document.getElementById('incomeBtn').addEventListener('click', () => setTransactionType('income'));
+
+            // Form submission
+            document.getElementById('transactionForm').addEventListener('submit', handleFormSubmit);
+
+            // Amount input formatting
+            document.getElementById('amount').addEventListener('input', formatAmountInput);
+
+            // Currency change
+            document.getElementById('currency').addEventListener('change', updateCurrencyConversion);
+
+            // Description character count
+            document.getElementById('description').addEventListener('input', updateCharCount);
+
+            // Voice input
+            document.getElementById('voiceInputBtn').addEventListener('click', toggleVoiceInput);
+
+            // Receipt upload
+            document.getElementById('uploadArea').addEventListener('click', () => {
+                document.getElementById('receiptUpload').click();
+            });
+            document.getElementById('receiptUpload').addEventListener('change', handleReceiptUpload);
+            document.getElementById('removeImage').addEventListener('click', removeReceiptImage);
+
+            // Recurring transaction toggle
+            document.getElementById('recurringToggle').addEventListener('change', toggleRecurringOptions);
+
+            // Action buttons
+            document.getElementById('cancelBtn').addEventListener('click', handleCancel);
+            document.getElementById('saveAnotherBtn').addEventListener('click', handleSaveAndAddAnother);
+
+            // Success modal buttons
+            document.getElementById('addAnotherBtn').addEventListener('click', () => {
+                document.getElementById('successMessage').classList.add('hidden');
+                resetForm();
+            });
+            document.getElementById('viewDashboardBtn').addEventListener('click', () => {
+                window.location.href = 'dashboard_overview.html';
+            });
+
+            // Custom category modal
+            document.getElementById('addCategoryBtn').addEventListener('click', () => {
+                document.getElementById('categoryModal').classList.remove('hidden');
+            });
+            document.getElementById('cancelCategoryBtn').addEventListener('click', () => {
+                document.getElementById('categoryModal').classList.add('hidden');
+            });
+            document.getElementById('saveCategoryBtn').addEventListener('click', saveCustomCategory);
+
+            // Auto-complete suggestions
+            setupAutoComplete();
+        }
+
+        function setTransactionType(type) {
+            currentTransactionType = type;
+            const expenseBtn = document.getElementById('expenseBtn');
+            const incomeBtn = document.getElementById('incomeBtn');
+            const expenseCategories = document.getElementById('expenseCategories');
+            const incomeCategories = document.getElementById('incomeCategories');
+
+            if (type === 'expense') {
+                expenseBtn.className = 'flex-1 py-3 px-4 text-sm font-medium rounded-md transition-all duration-200 bg-error text-white';
+                incomeBtn.className = 'flex-1 py-3 px-4 text-sm font-medium rounded-md transition-all duration-200 text-text-secondary hover:text-text-primary';
+                expenseCategories.classList.remove('hidden');
+                incomeCategories.classList.add('hidden');
+            } else {
+                incomeBtn.className = 'flex-1 py-3 px-4 text-sm font-medium rounded-md transition-all duration-200 bg-success text-white';
+                expenseBtn.className = 'flex-1 py-3 px-4 text-sm font-medium rounded-md transition-all duration-200 text-text-secondary hover:text-text-primary';
+                incomeCategories.classList.remove('hidden');
+                expenseCategories.classList.add('hidden');
+            }
+
+            // Reset category selection
+            document.getElementById('category').value = '';
+        }
+
+        function formatAmountInput(e) {
+            const value = e.target.value;
+            if (value && !isNaN(value)) {
+                // Add visual feedback for large amounts
+                const amount = parseFloat(value);
+                if (amount > 1000) {
+                    e.target.classList.add('text-primary');
+                } else {
+                    e.target.classList.remove('text-primary');
+                }
+            }
+        }
+
+        function updateCurrencyConversion() {
+            const currency = document.getElementById('currency').value;
+            const amount = document.getElementById('amount').value;
+            const conversionDiv = document.getElementById('conversionRate');
+            const conversionText = document.getElementById('conversionText');
+
+            if (currency !== 'INR' && amount) {
+                const rate = exchangeRates[currency];
+                const convertedAmount = (parseFloat(amount) * rate).toFixed(2);
+                conversionText.textContent = `≈ ${convertedAmount} ${currency}`;
+                conversionDiv.classList.remove('hidden');
+            } else {
+                conversionDiv.classList.add('hidden');
+            }
+        }
+
+        function updateCharCount() {
+            const description = document.getElementById('description');
+            const charCount = document.getElementById('charCount');
+            const count = description.value.length;
+            charCount.textContent = `${count}/200`;
+            
+            if (count > 200) {
+                charCount.classList.add('text-error');
+                description.value = description.value.substring(0, 200);
+            } else {
+                charCount.classList.remove('text-error');
+            }
+        }
+
+        function setupVoiceRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'en-US';
+
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    document.getElementById('description').value = transcript;
+                    updateCharCount();
+                };
+
+                recognition.onerror = function(event) {
+                    console.error('Speech recognition error:', event.error);
+                    stopVoiceInput();
+                };
+
+                recognition.onend = function() {
+                    stopVoiceInput();
+                };
+            } else {
+                // Hide voice input button if not supported
+                document.getElementById('voiceInputBtn').style.display = 'none';
+            }
+        }
+
+        function toggleVoiceInput() {
+            if (!recognition) return;
+
+            if (isListening) {
+                recognition.stop();
+            } else {
+                recognition.start();
+                startVoiceInput();
+            }
+        }
+
+        function startVoiceInput() {
+            isListening = true;
+            const btn = document.getElementById('voiceInputBtn');
+            btn.innerHTML = '<i class="fas fa-stop text-error"></i>';
+            btn.classList.add('bg-error-50');
+        }
+
+        function stopVoiceInput() {
+            isListening = false;
+            const btn = document.getElementById('voiceInputBtn');
+            btn.innerHTML = '<i class="fas fa-microphone"></i>';
+            btn.classList.remove('bg-error-50');
+        }
+
+        function handleReceiptUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewImg = document.getElementById('previewImg');
+                    previewImg.src = e.target.result;
+                    document.getElementById('uploadArea').classList.add('hidden');
+                    document.getElementById('imagePreview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeReceiptImage() {
+            document.getElementById('receiptUpload').value = '';
+            document.getElementById('uploadArea').classList.remove('hidden');
+            document.getElementById('imagePreview').classList.add('hidden');
+        }
+
+        function toggleRecurringOptions() {
+            const toggle = document.getElementById('recurringToggle');
+            const options = document.getElementById('recurringOptions');
+            
+            if (toggle.checked) {
+                options.classList.remove('hidden');
+            } else {
+                options.classList.add('hidden');
+            }
+        }
+
+        function saveCustomCategory() {
+            const name = document.getElementById('customCategoryName').value.trim();
+            const icon = document.getElementById('customCategoryIcon').value.trim();
+
+            if (!name) {
+                alert('Please enter a category name');
+                return;
+            }
+
+            const categorySelect = document.getElementById('category');
+            const optgroup = currentTransactionType === 'expense' ? 
+                document.getElementById('expenseCategories') : 
+                document.getElementById('incomeCategories');
+
+            const option = document.createElement('option');
+            option.value = name.toLowerCase().replace(/\s+/g, '-');
+            option.textContent = `${icon || '📦'} ${name}`;
+            
+            optgroup.appendChild(option);
+            categorySelect.value = option.value;
+
+            // Save to localStorage
+            const customCategories = JSON.parse(localStorage.getItem('customCategories') || '[]');
+            customCategories.push({
+                name: name,
+                icon: icon || '📦',
+                type: currentTransactionType,
+                value: option.value
+            });
+            localStorage.setItem('customCategories', JSON.stringify(customCategories));
+
+            // Close modal and reset
+            document.getElementById('categoryModal').classList.add('hidden');
+            document.getElementById('customCategoryName').value = '';
+            document.getElementById('customCategoryIcon').value = '';
+        }
+
+        function setupAutoComplete() {
+            // Load previous descriptions for auto-complete
+            const description = document.getElementById('description');
+            const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
+            const descriptions = [...new Set(transactions.map(t => t.description).filter(d => d))];
+
+            // Simple auto-complete implementation
+            description.addEventListener('input', function() {
+                const value = this.value.toLowerCase();
+                if (value.length > 2) {
+                    const matches = descriptions.filter(d => d.toLowerCase().includes(value));
+                    // In a real implementation, you'd show these as suggestions
+                    console.log('Auto-complete matches:', matches);
+                }
+            });
+        }
+
+        function validateForm() {
+            let isValid = true;
+            const errors = [];
+
+            // Amount validation
+            const amount = document.getElementById('amount').value;
+            if (!amount || parseFloat(amount) <= 0) {
+                document.getElementById('amountError').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('amountError').classList.add('hidden');
+            }
+
+            // Category validation
+            const category = document.getElementById('category').value;
+            if (!category) {
+                document.getElementById('categoryError').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('categoryError').classList.add('hidden');
+            }
+
+            // Date validation
+            const date = document.getElementById('date').value;
+            if (!date) {
+                document.getElementById('dateError').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('dateError').classList.add('hidden');
+            }
+
+            return isValid;
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            if (!validateForm()) {
+                return;
+            }
+
+            const formData = new FormData(e.target);
+            const transaction = {
+                id: isEditMode ? new URLSearchParams(window.location.search).get('id') : Date.now().toString(),
+                type: currentTransactionType,
+                amount: parseFloat(formData.get('amount')),
+                category: formData.get('category'),
+                date: formData.get('date'),
+                description: formData.get('description') || '',
+                currency: formData.get('currency'),
+                recurring: document.getElementById('recurringToggle').checked,
+                frequency: formData.get('frequency'),
+                endDate: formData.get('endDate'),
+                receiptImage: document.getElementById('previewImg').src || null,
+                createdAt: isEditMode ? null : new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+
+            saveTransaction(transaction);
+            showSuccessMessage();
+        }
+
+        function saveTransaction(transaction) {
+            const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
+            
+            if (isEditMode) {
+                const index = transactions.findIndex(t => t.id === transaction.id);
+                if (index !== -1) {
+                    transactions[index] = { ...transactions[index], ...transaction };
+                }
+            } else {
+                transactions.push(transaction);
+            }
+
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+
+            // Update budget tracking
+            updateBudgetTracking(transaction);
+        }
+
+        function updateBudgetTracking(transaction) {
+            const budgets = JSON.parse(localStorage.getItem('budgets') || '[]');
+            const currentMonth = new Date().toISOString().slice(0, 7);
+            
+            budgets.forEach(budget => {
+                if (budget.category === transaction.category && budget.month === currentMonth) {
+                    if (transaction.type === 'expense') {
+                        budget.spent = (budget.spent || 0) + transaction.amount;
+                    }
+                }
+            });
+
+            localStorage.setItem('budgets', JSON.stringify(budgets));
+        }
+
+        function showSuccessMessage() {
+            document.getElementById('successMessage').classList.remove('hidden');
+        }
+
+        function handleCancel() {
+            if (confirm('Are you sure you want to cancel? Any unsaved changes will be lost.')) {
+                window.location.href = 'dashboard_overview.html';
+            }
+        }
+
+        function handleSaveAndAddAnother() {
+            // This would be implemented to save and reset the form
+            console.log('Save and add another functionality');
+        }
+
+        function resetForm() {
+            document.getElementById('transactionForm').reset();
+            document.getElementById('date').value = new Date().toISOString().split('T')[0];
+            setTransactionType('expense');
+            removeReceiptImage();
+            document.getElementById('recurringOptions').classList.add('hidden');
+            document.getElementById('recurringToggle').checked = false;
+        }
+
+        function loadTransactionForEdit(transactionId) {
+            const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
+            const transaction = transactions.find(t => t.id === transactionId);
+            
+            if (transaction) {
+                document.getElementById('amount').value = transaction.amount;
+                document.getElementById('category').value = transaction.category;
+                document.getElementById('date').value = transaction.date;
+                document.getElementById('description').value = transaction.description || '';
+                document.getElementById('currency').value = transaction.currency || 'INR';
+                
+                setTransactionType(transaction.type);
+                
+                if (transaction.recurring) {
+                    document.getElementById('recurringToggle').checked = true;
+                    document.getElementById('frequency').value = transaction.frequency || 'monthly';
+                    document.getElementById('endDate').value = transaction.endDate || '';
+                    toggleRecurringOptions();
+                }
+
+                if (transaction.receiptImage) {
+                    document.getElementById('previewImg').src = transaction.receiptImage;
+                    document.getElementById('uploadArea').classList.add('hidden');
+                    document.getElementById('imagePreview').classList.remove('hidden');
+                }
+
+                updateCharCount();
+            }
+        }
+
+        // Dark mode toggle (placeholder)
+        document.getElementById('darkModeToggle').addEventListener('click', function() {
+            console.log('Dark mode toggled');
+        });
+
+        // Load custom categories on page load
+        window.addEventListener('load', function() {
+            const customCategories = JSON.parse(localStorage.getItem('customCategories') || '[]');
+            customCategories.forEach(category => {
+                const optgroup = category.type === 'expense' ? 
+                    document.getElementById('expenseCategories') : 
+                    document.getElementById('incomeCategories');
+                
+                const option = document.createElement('option');
+                option.value = category.value;
+                option.textContent = `${category.icon} ${category.name}`;
+                optgroup.appendChild(option);
+            });
+        });
+    </script>
+</body>
+</html>
